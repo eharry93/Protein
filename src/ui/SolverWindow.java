@@ -51,7 +51,7 @@ public class SolverWindow extends JDialog {
         TransmissionLoss.HLDensity = Double.parseDouble(textField2.getText());
         TransmissionLoss.FoamThickness = Double.parseDouble(textField3.getText());
         TransmissionLoss.main(null);
-        dispose();
+//        dispose();
     }
 
     private void onCancel() {
