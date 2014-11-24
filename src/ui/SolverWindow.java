@@ -61,8 +61,10 @@ public class SolverWindow extends JDialog {
 
     public static void main(String[] args) {
         SolverWindow dialog = new SolverWindow();
+        dialog.setTitle("New Model");
         dialog.pack();
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-        System.exit(0);
+//        System.exit(0);
     }
 }
