@@ -66,7 +66,8 @@ public class TransmissionLoss implements Data{
             MaterialIL(TLResultArray[i], SteelTLArray[i]);
             MaterialILArray[i] = MaterialIL;
             MaterialILData[i] = MaterialIL;
-            System.out.println(MaterialILArray[i]);
+//            Bug tracking use - answer check
+//            System.out.println(MaterialILArray[i]);
         }
     }
 
