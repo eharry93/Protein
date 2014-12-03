@@ -1,29 +1,29 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.data.xy.XYSeries;
 
 /**
  * Created by Evan on 24/11/2014.
  */
-public class MainWindow {
+public class MainWindow extends JFrame  {
     private JPanel contentPane;
     private JPanel CardPanel;
-    final static String BUTTONPANEL = "Card with JButtons";
-    final static String TEXTPANEL = "Card with JTextField";
+    private JPanel JP1, JP2;
+    private JLabel JL1, JL2;
+    private CardLayout cardLayout;
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Protein Modelling Suite");
-        frame.setContentPane(new MainWindow().contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-        frame.setBounds(0,0,450,400);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    public MainWindow() {
+        setContentPane(contentPane);
+
 //        Menu Bar
         JMenuBar menuBar = new JMenuBar();
-        frame.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
 
 //        File Menu
         JMenu mnFile = new JMenu("File");
@@ -50,25 +50,54 @@ public class MainWindow {
 //        Model
         JMenuItem mnitmModel = new JMenuItem("Model");
         mnWindow.add(mnitmModel);
+        mnitmModel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showModel();
+            }
+        });
 //        Graph
         JMenuItem mnitmGraph = new JMenuItem("Graph");
         mnWindow.add(mnitmGraph);
+        mnitmGraph.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showGraph();
+            }
+        });
     }
 
-    private static void newModel() {
+    public static void main(String[] args) {
+        MainWindow Window = new MainWindow();
+        Window.setTitle("Protein Modelling Suite");
+        Window.setBounds(0,0,400,450);
+        Window.setLocationRelativeTo(null);
+        Window.setVisible(true);
+    }
+
+    private void newModel() {
         SolverWindow.main(null);
     }
 
+    private void showModel() {
+        cardLayout.show(CardPanel, "1");
+    }
+
+    private void showGraph() {
+        cardLayout.show(CardPanel, "2");
+    }
+
     private void createUIComponents() {
-        JPanel card1 = new JPanel();
-        card1.add(new JButton("Button 1"));
-        card1.add(new JButton("Button 2"));
-        card1.add(new JButton("Button 3"));
-
-        JPanel card2 = new JPanel();
-        card2.add(new JTextField("TextField", 20));
-
-        CardPanel.add(card1, BUTTONPANEL);
-        CardPanel.add(card2, TEXTPANEL);
+        CardPanel = new JPanel();
+        cardLayout  = new CardLayout();
+        CardPanel.setLayout(cardLayout);
+        JP1 = new JPanel();
+        JP2 = new JPanel();
+        final XYSeries s1 = new XYSeries("");
+        TLGraph Diagram = new TLGraph(s1);
+        JL1 = new JLabel("Card 1");
+        JP2.add(Diagram.chartPanel);
+        CardPanel.add(JP1, "1");
+        CardPanel.add(JP2, "2");
     }
 }

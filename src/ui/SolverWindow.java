@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import maths.TransmissionLoss;
+import org.jfree.data.xy.XYSeries;
 
 public class SolverWindow extends JDialog {
     private JPanel contentPane;
@@ -51,6 +52,14 @@ public class SolverWindow extends JDialog {
         TransmissionLoss.HLDensity = Double.parseDouble(textField2.getText());
         TransmissionLoss.FoamThickness = Double.parseDouble(textField3.getText());
         TransmissionLoss.main(null);
+
+        final XYSeries s1 = new XYSeries("Material TL");
+        int i;
+        for (i = 0; i < TransmissionLoss.Freq.length; i++) {
+            s1.add(TransmissionLoss.Freq[i], TransmissionLoss.GraphData[i]);
+        }
+
+
 //        dispose();
     }
 
