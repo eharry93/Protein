@@ -1,8 +1,5 @@
 package maths;
 
-import org.jfree.data.xy.XYSeries;
-import ui.TLGraph;
-
 /**
  * Created by Evan on 07/11/2014.
  */

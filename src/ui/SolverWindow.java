@@ -58,8 +58,8 @@ public class SolverWindow extends JDialog {
         for (i = 0; i < TransmissionLoss.Freq.length; i++) {
             s1.add(TransmissionLoss.Freq[i], TransmissionLoss.GraphData[i]);
         }
-
-
+        GraphPanel Diagram = new GraphPanel(s1);
+//        MainWindow.JP2.add(Diagram);
 //        dispose();
     }
 

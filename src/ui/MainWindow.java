@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.jfree.chart.ChartPanel;
 import org.jfree.data.xy.XYSeries;
 
 /**
@@ -14,7 +13,8 @@ import org.jfree.data.xy.XYSeries;
 public class MainWindow extends JFrame  {
     private JPanel contentPane;
     private JPanel CardPanel;
-    private JPanel JP1, JP2;
+    public JPanel JP1;
+    public static JPanel JP2;
     private JLabel JL1, JL2;
     private CardLayout cardLayout;
 
@@ -91,10 +91,11 @@ public class MainWindow extends JFrame  {
         CardPanel = new JPanel();
         cardLayout  = new CardLayout();
         CardPanel.setLayout(cardLayout);
-        JP1 = new JPanel();
+        ModelWindow Model = new ModelWindow();
+        JP1 = Model.contentPane;
         JP2 = new JPanel();
         final XYSeries s1 = new XYSeries("");
-        TLGraph Diagram = new TLGraph(s1);
+        GraphPanel Diagram = new GraphPanel(s1);
         JL1 = new JLabel("Card 1");
         JP2.add(Diagram.chartPanel);
         CardPanel.add(JP1, "1");
