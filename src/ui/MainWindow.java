@@ -1,27 +1,28 @@
 package ui;
 
+import maths.TransmissionLoss;
+import org.jfree.data.xy.XYSeries;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.jfree.data.xy.XYSeries;
-
 /**
- * Created by Evan on 24/11/2014.
+ * Created by Evan on 12/12/2014.
  */
-public class MainWindow extends JFrame  {
+public class MainWindow extends JFrame {
     private JPanel contentPane;
-    private JPanel CardPanel;
-    public JPanel JP1;
-    public static JPanel JP2;
-    private JLabel JL1, JL2;
-    private CardLayout cardLayout;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JButton solveButton;
+    private JButton exportResultsButton;
+    private JButton graphButton;
 
     public MainWindow() {
         setContentPane(contentPane);
 
-//        Menu Bar
+        //        Menu Bar
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
@@ -31,12 +32,6 @@ public class MainWindow extends JFrame  {
 //        New Model
         JMenuItem mnitmNew = new JMenuItem("New Model");
         mnFile.add(mnitmNew);
-        mnitmNew.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                newModel();
-            }
-        });
 //        Open Model
         JMenuItem mnitmOpen = new JMenuItem("Open Model");
         mnFile.add(mnitmOpen);
@@ -44,25 +39,25 @@ public class MainWindow extends JFrame  {
         JMenuItem mnitmSave = new JMenuItem("Save Model");
         mnFile.add(mnitmSave);
 
-//        Window Menu
-        JMenu mnWindow = new JMenu("Window");
-        menuBar.add(mnWindow);
-//        Model
-        JMenuItem mnitmModel = new JMenuItem("Model");
-        mnWindow.add(mnitmModel);
-        mnitmModel.addActionListener(new ActionListener() {
+//        Button Action Listeners
+        solveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showModel();
+                Solve();
             }
         });
-//        Graph
-        JMenuItem mnitmGraph = new JMenuItem("Graph");
-        mnWindow.add(mnitmGraph);
-        mnitmGraph.addActionListener(new ActionListener() {
+
+        exportResultsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showGraph();
+                ExportResults();
+            }
+        });
+
+        graphButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Graph();
             }
         });
     }
@@ -70,35 +65,32 @@ public class MainWindow extends JFrame  {
     public static void main(String[] args) {
         MainWindow Window = new MainWindow();
         Window.setTitle("Protein Modelling Suite");
-        Window.setBounds(0,0,400,450);
+//        Window.setBounds(0,0,400,300);
+        Window.pack();
         Window.setLocationRelativeTo(null);
         Window.setVisible(true);
     }
 
-    private void newModel() {
-        SolverWindow.main(null);
+    public void Solve() {
+        TransmissionLoss.SteelWeight = Double.parseDouble(textField1.getText());
+        TransmissionLoss.HLDensity = Double.parseDouble(textField2.getText());
+        TransmissionLoss.FoamThickness = Double.parseDouble(textField3.getText());
+        TransmissionLoss.main(null);
     }
 
-    private void showModel() {
-        cardLayout.show(CardPanel, "1");
+    public void ExportResults() {
+
     }
 
-    private void showGraph() {
-        cardLayout.show(CardPanel, "2");
-    }
-
-    private void createUIComponents() {
-        CardPanel = new JPanel();
-        cardLayout  = new CardLayout();
-        CardPanel.setLayout(cardLayout);
-        ModelWindow Model = new ModelWindow();
-        JP1 = Model.contentPane;
-        JP2 = new JPanel();
-        final XYSeries s1 = new XYSeries("");
-        GraphPanel Diagram = new GraphPanel(s1);
-        JL1 = new JLabel("Card 1");
-        JP2.add(Diagram.chartPanel);
-        CardPanel.add(JP1, "1");
-        CardPanel.add(JP2, "2");
+    public void Graph() {
+        final XYSeries s1 = new XYSeries("Material TL");
+        int i;
+        for (i = 0; i < TransmissionLoss.Freq.length; i++) {
+            s1.add(TransmissionLoss.Freq[i], TransmissionLoss.GraphData[i]);
+        }
+        TLGraph diagram = new TLGraph(s1);
+        diagram.pack();
+        diagram.setVisible(true);
+        diagram.setLocationRelativeTo(null);
     }
 }

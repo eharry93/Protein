@@ -8,6 +8,5 @@ import ui.MainWindow;
 public class Startup {
 
     public static void main(String[] args) {
-//        SolverWindow.main(null);
         MainWindow.main(null);
     }}

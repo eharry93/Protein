@@ -14,7 +14,6 @@ public class TransmissionLoss implements Data{
     public static double SteelWeight, HLDensity, FoamThickness;
 
     public static void main(String[] args)  {
-//        Data data = new Data();
 
         int i;
         double TotalMass;
