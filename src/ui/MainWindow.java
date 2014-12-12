@@ -1,11 +1,14 @@
 package ui;
 
 import maths.TransmissionLoss;
+import dataManagement.Systems;
 import org.jfree.data.xy.XYSeries;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Evan on 12/12/2014.
@@ -18,6 +21,17 @@ public class MainWindow extends JFrame {
     private JButton solveButton;
     private JButton exportResultsButton;
     private JButton graphButton;
+    private JComboBox<String> comboBox1;
+    private JButton okayButton;
+    private JButton loadButton;
+    public static String[] array = new String[]{"Model 1"};
+
+    public static String newModelName;
+
+    public List<String> ModelNameList = new ArrayList<String>();
+    public List<Double> MetalWeightList = new ArrayList<Double>();
+    public List<Double> HLDensityList = new ArrayList<Double>();
+    public List<Double> FoamThicknessList = new ArrayList<Double>();
 
     public MainWindow() {
         setContentPane(contentPane);
@@ -32,6 +46,13 @@ public class MainWindow extends JFrame {
 //        New Model
         JMenuItem mnitmNew = new JMenuItem("New Model");
         mnFile.add(mnitmNew);
+        mnitmNew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NewModel.main(null);
+                NewModel(newModelName);
+            }
+        });
 //        Open Model
         JMenuItem mnitmOpen = new JMenuItem("Open Model");
         mnFile.add(mnitmOpen);
@@ -60,6 +81,21 @@ public class MainWindow extends JFrame {
                 Graph();
             }
         });
+
+        okayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SaveSystem();
+            }
+        });
+
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoadSystem();
+            }
+        });
+
     }
 
     public static void main(String[] args) {
@@ -92,5 +128,34 @@ public class MainWindow extends JFrame {
         diagram.pack();
         diagram.setVisible(true);
         diagram.setLocationRelativeTo(null);
+    }
+
+    private void createUIComponents() {
+        comboBox1 = new JComboBox<String>(array);
+        // TODO: place custom component creation code here
+    }
+
+    public void NewModel(String ModelName) {
+        System.out.println("New Model Created!");
+        comboBox1.addItem(ModelName);
+        comboBox1.setSelectedItem(ModelName);
+        Systems newModel = new Systems(ModelName);
+        int i = (comboBox1.getSelectedIndex());
+        ModelNameList.add(ModelName);
+    }
+
+    public void SaveSystem() {
+        int i = (comboBox1.getSelectedIndex());
+        System.out.println(comboBox1.getSelectedIndex());
+        MetalWeightList.add(Double.parseDouble(textField1.getText()));
+        HLDensityList.add(Double.parseDouble(textField2.getText()));
+        FoamThicknessList.add(Double.parseDouble(textField3.getText()));
+    }
+
+    public void LoadSystem() {
+        int i = (comboBox1.getSelectedIndex());
+        textField1.setText(String.valueOf(MetalWeightList.get(i)));
+        textField2.setText(String.valueOf(HLDensityList.get(i)));
+        textField3.setText(String.valueOf(FoamThicknessList.get(i)));
     }
 }
