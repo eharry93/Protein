@@ -139,6 +139,7 @@ public class MainWindow extends JFrame {
         Solver.CoincidenceFactor();
         Results = Solver.AddResults();
         GraphResults = Results.toArray(new Double[Results.size()]);
+        Solver.ResetArrays();
     }
 
     public void ExportResults() {

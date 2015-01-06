@@ -7,11 +7,18 @@ import java.util.List;
  * Created by Evan on 05/01/2015.
  */
 public class Data {
+
+//    TL Solver Variables
     public double TLResult, EquivMass, WallResHz, UpperResHz, MLTor, TransRegion, DoubleRegion, FirstSolve, SecondSolve, SteelTL, MaterialIL;
+
 //    Bare Metal Properties
     public double BMThickness, BMWavespeed, BMDensity;
 //    Barrier Properties
     public double BarrierThickness, BarrierDensity;
+//    Decoupler Properties
+    public double DecouplerThickness;
+
+//    Coincidence Variables
     public double CritFreq;
     public int CritFreqBand;
     public double SpeedOfSound = 340.0;
@@ -22,5 +29,13 @@ public class Data {
     public double[] CoincAddFactor = new double[23];
     public List<Double> Results = new ArrayList<Double>();
     public List<Double> TLSolverResults = new ArrayList<Double>();
+
+    public void setBMThickness(double value) {
+        BMThickness = value;
+    }
+
+    public double getBMThickness() {
+        return BMThickness;
+    }
 
 }

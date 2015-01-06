@@ -4,85 +4,20 @@ package maths;
  * Created by Evan on 07/11/2014.
  */
 public class TransmissionLoss extends EquationControl {
-//    public static double[] Freq = {
-//            100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000
-//    };
-//    public static double[] GraphData = new double[21];
-//    public static double[] SteelTLData = new double [21];
-//    public static double[] MaterialILData = new double [21];
 
-//    First Solver - New one implemented below
-//    public void Solve(Double SteelWeight, Double HLDensity, Double FoamThickness)  {
-//
-//        int i;
-//        double TotalMass;
-//        TotalMass = SteelWeight + HLDensity;
-//        for (i=0; i<Freq.length; i++)	{
-//            MLTor(Freq[i], TotalMass);
-//            MassLawArray[i] = MLTor;
-//        }
-//
-//        for (i=0; i<Freq.length; i++)	{
-//            TransRegion(Freq[i], SteelWeight, HLDensity, FoamThickness);
-//            TransRegionArray[i] = TransRegion;
-//        }
-//
-//        for (i=0; i<Freq.length; i++)	{
-//            DoubleRegion(Freq[i], SteelWeight, HLDensity);
-//            DoubleRegionArray[i] = DoubleRegion;
-//        }
-//
-//        for (i=0; i<Freq.length; i++)	{
-//            SteelTL(Freq[i], SteelWeight);
-//            SteelTLArray[i] = SteelTL;
-//            SteelTLData[i] = SteelTL;
-//        }
-//
-//        EquivMass(SteelWeight, HLDensity);
-//        DoubleWallResonance(FoamThickness);
-//        UpperResonantFrequency(FoamThickness);
-//
-//        //Solve Iterations
-//        //First Iteration
-//        for (i=0; i<Freq.length; i++)	{
-//            FirstSolve(Freq[i], WallResHz, MassLawArray[i], TransRegionArray[i]);
-//            FirstSolveArray[i] = FirstSolve;
-//        }
-//        //Second Iteration
-//        for (i=0; i<Freq.length; i++)	{
-//            SecondSolve(Freq[i], UpperResHz, DoubleRegionArray[i]);
-//            SecondSolveArray[i] = SecondSolve;
-//        }
-//        //Final Result
-//        for (i=0; i<Freq.length; i++)	{
-//            TLResult(FirstSolveArray[i], SecondSolveArray[i]);
-//            TLResultArray[i] = TLResult;
-//            GraphData[i] = TLResult;
-//        }
-//        //IL of System
-//        for (i=0; i<Freq.length; i++)	{
-//            MaterialIL(TLResultArray[i], SteelTLArray[i]);
-//            MaterialILArray[i] = MaterialIL;
-//            MaterialILData[i] = MaterialIL;
-////            Bug tracking use - answer check
-////            System.out.println(MaterialILArray[i]);
-//        }
-//    }
-
-    public double NewSolver(double SteelWeight, double HLDensity, double FoamThickness, double freq) {
+    public double NewSolver(double freq) {
         double TotalMass;
-        TotalMass = (Dataset.BMThickness * SteelWeight) + HLDensity;
-        double BMMass = Dataset.BMThickness * SteelWeight;
-        System.out.println(Dataset.BMThickness);
+        TotalMass = (Dataset.BMThickness * Dataset.BMDensity) + Dataset.BarrierDensity;
+        double BMMass = Dataset.BMThickness * Dataset.BMDensity;
 
         MLTor(freq, TotalMass);
-        TransRegion(freq, BMMass, HLDensity, FoamThickness);
-        DoubleRegion(freq, BMMass, HLDensity);
+        TransRegion(freq, BMMass, Dataset.BarrierDensity, Dataset.DecouplerThickness);
+        DoubleRegion(freq, BMMass, Dataset.BarrierDensity);
         SteelTL(freq, BMMass);
 
-        EquivMass(BMMass, HLDensity);
-        DoubleWallResonance(FoamThickness);
-        UpperResonantFrequency(FoamThickness);
+        EquivMass(BMMass, Dataset.BarrierDensity);
+        DoubleWallResonance(Dataset.DecouplerThickness);
+        UpperResonantFrequency(Dataset.DecouplerThickness);
 
         FirstSolve(freq, Dataset.WallResHz, Dataset.MLTor, Dataset.TransRegion);
         SecondSolve(freq, Dataset.UpperResHz, Dataset.DoubleRegion);

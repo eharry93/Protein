@@ -1,6 +1,6 @@
 package maths;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,13 +12,14 @@ public class EquationControl {
 
     public List<Double> TLSolver(double SteelWeight, double HLDensity, double FoamThickness, double BMThickness) {
         Dataset.BMThickness = BMThickness;
+        Dataset.BMDensity = SteelWeight;
+        Dataset.BarrierDensity = HLDensity;
+        Dataset.DecouplerThickness = FoamThickness;
 
         TransmissionLoss Solver = new TransmissionLoss();
 
-        System.out.println(Dataset.BMThickness);
-
-        for(double i : Dataset.Freq) {
-            Dataset.TLSolverResults.add(Solver.NewSolver(SteelWeight, HLDensity, FoamThickness, i));
+        for (double i : Dataset.Freq) {
+            Dataset.TLSolverResults.add(Solver.NewSolver(i));
         }
 
         return Dataset.TLSolverResults;
@@ -26,20 +27,31 @@ public class EquationControl {
 
     public double[] CoincidenceFactor() {
         CoincidenceCalc Solver = new CoincidenceCalc();
-        System.out.println(Dataset.BMThickness);
         Dataset.CritFreq = Solver.CritFreqCalc(Dataset.BMThickness, 5000.0);
         Dataset.CritFreqBand = Solver.CritFreqBandCalc(Dataset.CritFreq);
-        Dataset.CoincAddFactor = Solver.CoincidenceAddFactorCalc(Dataset.CritFreq, Dataset.CritFreqBand, 0.05);
+        Dataset.CoincAddFactor = Solver.CoincidenceAddFactorCalc(Dataset.CritFreq, Dataset.CritFreqBand, 0.01);
         return Dataset.CoincAddFactor;
     }
 
     public List<Double> AddResults() {
-        System.out.println(Arrays.toString(Dataset.CoincAddFactor));
-        for(int i = 0; i<Dataset.FreqIndex.length; i++) {
+        for (int i = 0; i < Dataset.FreqIndex.length; i++) {
             Dataset.Results.add(Dataset.CoincAddFactor[i] + Dataset.TLSolverResults.get(i));
         }
 
         return Dataset.Results;
     }
 
+    public void ResetArrays() {
+        Dataset.TLSolverResults.clear();
+        Dataset.Results.clear();
+    }
+
+    public void MLTest() {
+        TransmissionLoss Solver = new TransmissionLoss();
+        List<Double> Result = new ArrayList<Double>();
+        for (int i = 0; i<Dataset.Freq.length; i++) {
+            Result.add(Solver.SteelTL(Dataset.Freq[i], (7.8 * 1.0)));
+        }
+        System.out.println(Result);
+    }
 }

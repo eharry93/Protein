@@ -1,6 +1,7 @@
 package maths;
 
 import java.lang.Math;
+import java.util.Arrays;
 
 /**
  * Created by Evan on 05/01/2015.
@@ -13,7 +14,6 @@ public class CoincidenceCalc extends EquationControl {
         b = 1.8 * (BMThickness / 1000) * BMWavespeed;
         c = a / b;
         Dataset.CritFreq = c;
-        System.out.println(Dataset.BMThickness);
         return Dataset.CritFreq;
     }
 
@@ -36,6 +36,8 @@ public class CoincidenceCalc extends EquationControl {
         for(a = FreqBandIndex; a < Dataset.CoincAddFactor.length; a++) {
             Dataset.CoincAddFactor[a] = d;
         }
+
+        System.out.println(Arrays.toString(Dataset.CoincAddFactor));
 
         return Dataset.CoincAddFactor;
     }

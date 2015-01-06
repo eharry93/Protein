@@ -9,7 +9,7 @@ import maths.*;
 public class Startup {
 
     public static void main(String[] args) {
-//        MainWindow.main(null);
-        EquationControl Tester = new EquationControl();
-        Tester.Test();
+        MainWindow.main(null);
+//        EquationControl Tester = new EquationControl();
+//        Tester.MLTest();
     }}
