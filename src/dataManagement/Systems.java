@@ -30,4 +30,13 @@ public class Systems {
         System.out.println("B" + b);
         System.out.println("C" + c);
     }
+
+    public Object ModelSubSystem(String name) {
+        this.name = name;
+        Double thickness;
+        Double density;
+        return null;
+    }
+
+
 }

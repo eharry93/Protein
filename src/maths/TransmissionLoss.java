@@ -3,154 +3,173 @@ package maths;
 /**
  * Created by Evan on 07/11/2014.
  */
-public class TransmissionLoss implements Data{
-    public static double EquivMass, WallResHz, UpperResHz, MLTor, TransRegion, DoubleRegion, FirstSolve, SecondSolve, TLResult, SteelTL, MaterialIL;
-    public static double[] Freq = {
-            100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000
-    };
-    public static double[] GraphData = new double[21];
-    public static double[] SteelTLData = new double [21];
-    public static double[] MaterialILData = new double [21];
-    public static double SteelWeight, HLDensity, FoamThickness;
+public class TransmissionLoss extends EquationControl {
+//    public static double[] Freq = {
+//            100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000
+//    };
+//    public static double[] GraphData = new double[21];
+//    public static double[] SteelTLData = new double [21];
+//    public static double[] MaterialILData = new double [21];
 
-    public static void main(String[] args)  {
+//    First Solver - New one implemented below
+//    public void Solve(Double SteelWeight, Double HLDensity, Double FoamThickness)  {
+//
+//        int i;
+//        double TotalMass;
+//        TotalMass = SteelWeight + HLDensity;
+//        for (i=0; i<Freq.length; i++)	{
+//            MLTor(Freq[i], TotalMass);
+//            MassLawArray[i] = MLTor;
+//        }
+//
+//        for (i=0; i<Freq.length; i++)	{
+//            TransRegion(Freq[i], SteelWeight, HLDensity, FoamThickness);
+//            TransRegionArray[i] = TransRegion;
+//        }
+//
+//        for (i=0; i<Freq.length; i++)	{
+//            DoubleRegion(Freq[i], SteelWeight, HLDensity);
+//            DoubleRegionArray[i] = DoubleRegion;
+//        }
+//
+//        for (i=0; i<Freq.length; i++)	{
+//            SteelTL(Freq[i], SteelWeight);
+//            SteelTLArray[i] = SteelTL;
+//            SteelTLData[i] = SteelTL;
+//        }
+//
+//        EquivMass(SteelWeight, HLDensity);
+//        DoubleWallResonance(FoamThickness);
+//        UpperResonantFrequency(FoamThickness);
+//
+//        //Solve Iterations
+//        //First Iteration
+//        for (i=0; i<Freq.length; i++)	{
+//            FirstSolve(Freq[i], WallResHz, MassLawArray[i], TransRegionArray[i]);
+//            FirstSolveArray[i] = FirstSolve;
+//        }
+//        //Second Iteration
+//        for (i=0; i<Freq.length; i++)	{
+//            SecondSolve(Freq[i], UpperResHz, DoubleRegionArray[i]);
+//            SecondSolveArray[i] = SecondSolve;
+//        }
+//        //Final Result
+//        for (i=0; i<Freq.length; i++)	{
+//            TLResult(FirstSolveArray[i], SecondSolveArray[i]);
+//            TLResultArray[i] = TLResult;
+//            GraphData[i] = TLResult;
+//        }
+//        //IL of System
+//        for (i=0; i<Freq.length; i++)	{
+//            MaterialIL(TLResultArray[i], SteelTLArray[i]);
+//            MaterialILArray[i] = MaterialIL;
+//            MaterialILData[i] = MaterialIL;
+////            Bug tracking use - answer check
+////            System.out.println(MaterialILArray[i]);
+//        }
+//    }
 
-        int i;
+    public double NewSolver(double SteelWeight, double HLDensity, double FoamThickness, double freq) {
         double TotalMass;
         TotalMass = SteelWeight + HLDensity;
-        for (i=0; i<Freq.length; i++)	{
-            MLTor(Freq[i], TotalMass);
-            MassLawArray[i] = MLTor;
-        }
 
-        for (i=0; i<Freq.length; i++)	{
-            TransRegion(Freq[i], SteelWeight, HLDensity, FoamThickness);
-            TransRegionArray[i] = TransRegion;
-        }
-
-        for (i=0; i<Freq.length; i++)	{
-            DoubleRegion(Freq[i], SteelWeight, HLDensity);
-            DoubleRegionArray[i] = DoubleRegion;
-        }
-
-        for (i=0; i<Freq.length; i++)	{
-            SteelTL(Freq[i], SteelWeight);
-            SteelTLArray[i] = SteelTL;
-            SteelTLData[i] = SteelTL;
-        }
+        MLTor(freq, TotalMass);
+        TransRegion(freq, SteelWeight, HLDensity, FoamThickness);
+        DoubleRegion(freq, SteelWeight, HLDensity);
+        SteelTL(freq, SteelWeight);
 
         EquivMass(SteelWeight, HLDensity);
         DoubleWallResonance(FoamThickness);
         UpperResonantFrequency(FoamThickness);
 
-        //Solve Iterations
-        //First Iteration
-        for (i=0; i<Freq.length; i++)	{
-            FirstSolve(Freq[i], WallResHz, MassLawArray[i], TransRegionArray[i]);
-            FirstSolveArray[i] = FirstSolve;
-        }
-        //Second Iteration
-        for (i=0; i<Freq.length; i++)	{
-            SecondSolve(Freq[i], UpperResHz, DoubleRegionArray[i]);
-            SecondSolveArray[i] = SecondSolve;
-        }
-        //Final Result
-        for (i=0; i<Freq.length; i++)	{
-            TLResult(FirstSolveArray[i], SecondSolveArray[i]);
-            TLResultArray[i] = TLResult;
-            GraphData[i] = TLResult;
-        }
-        //IL of System
-        for (i=0; i<Freq.length; i++)	{
-            MaterialIL(TLResultArray[i], SteelTLArray[i]);
-            MaterialILArray[i] = MaterialIL;
-            MaterialILData[i] = MaterialIL;
-//            Bug tracking use - answer check
-//            System.out.println(MaterialILArray[i]);
-        }
+        FirstSolve(freq, Dataset.WallResHz, Dataset.MLTor, Dataset.TransRegion);
+        SecondSolve(freq, Dataset.UpperResHz, Dataset.DoubleRegion);
+        TLResult(Dataset.FirstSolve, Dataset.SecondSolve);
+
+        return Dataset.TLResult;
     }
 
-    public static Double DoubleWallResonance(double FoamThick)	{
+    public double DoubleWallResonance(double FoamThick)	{
         double a, b, c;
         a = FoamThick / 1000;
-        b = a * EquivMass;
+        b = a * Dataset.EquivMass;
         c = Math.pow(b,0.5);
-        WallResHz = 42/c;
-        return WallResHz;
+        Dataset.WallResHz = 42/c;
+        return Dataset.WallResHz;
     }
 
-    public static Double EquivMass (double Weight, double Density)	{
+    public double EquivMass (double Weight, double Density)	{
         double a, b;
         a = Weight * Density;
         b = Density + Weight;
-        EquivMass = a / b;
-        return EquivMass;
+        Dataset.EquivMass = a / b;
+        return Dataset.EquivMass;
     }
 
-    public static Double UpperResonantFrequency (double FoamThick)	{
+    public double UpperResonantFrequency (double FoamThick)	{
         double a, b;
         a = 12 * (FoamThick/1000);
         b = 340/a;
-        UpperResHz = b;
-        return UpperResHz;
+        Dataset.UpperResHz = b;
+        return Dataset.UpperResHz;
     }
 
-    public static Double MLTor (double Frequency, double Mass)	{
-        MLTor = (20 * (Math.log10(Mass * Frequency)) - 47.2);
-        return MLTor;
+    public double MLTor (double Frequency, double Mass)	{
+        Dataset.MLTor = (20 * (Math.log10(Mass * Frequency)) - 47.2);
+        return Dataset.MLTor;
     }
 
-    public static Double TransRegion (double Frequency, double Mass, double Density, double FoamThick)	{
+    public double TransRegion (double Frequency, double Mass, double Density, double FoamThick)	{
         double a, b, c;
         a = (20 * (Math.log10(Mass * Frequency)) - 47.2);
         b = (20 * (Math.log10(Density * Frequency)) - 47.2);
         c = (20 * (Math.log10((FoamThick/1000) * Frequency)) - 28.7);
-        TransRegion = a + b + c;
-        return TransRegion;
+        Dataset.TransRegion = a + b + c;
+        return Dataset.TransRegion;
     }
 
-    public static Double DoubleRegion (double Frequency, double Mass, double Density)	{
+    public double DoubleRegion (double Frequency, double Mass, double Density)	{
         double a, b;
         a = (20 * (Math.log10(Mass * Frequency)) - 47.2);
         b = (20 * (Math.log10(Density * Frequency)) - 47.2);
-        DoubleRegion = a + b;
-        return DoubleRegion;
+        Dataset.DoubleRegion = a + b;
+        return Dataset.DoubleRegion;
     }
 
-    public static Double FirstSolve (double Frequency, double DoubleWallRes, double MassLaw, double TransRegion)	{
+    public double FirstSolve (double Frequency, double DoubleWallRes, double MassLaw, double TransRegion)	{
         if (Frequency <= DoubleWallRes)	{
-            FirstSolve = MassLaw;
+            Dataset.FirstSolve = MassLaw;
         } else {
-            FirstSolve = TransRegion;
+            Dataset.FirstSolve = TransRegion;
         }
-        return FirstSolve;
+        return Dataset.FirstSolve;
     }
 
-    public static Double SecondSolve (double Frequency, double UpperResHz, double DoubleRegion)	{
+    public double SecondSolve (double Frequency, double UpperResHz, double DoubleRegion)	{
         if (Frequency > UpperResHz)	{
-            SecondSolve = DoubleRegion;
+            Dataset.SecondSolve = DoubleRegion;
         } else {
-            SecondSolve = 0;
+            Dataset.SecondSolve = 0;
         }
-        return SecondSolve;
+        return Dataset.SecondSolve;
     }
 
-    public static Double TLResult (double FirstSolve, double SecondSolve)	{
+    public double TLResult (double FirstSolve, double SecondSolve)	{
         if (SecondSolve > 0)	{
-            TLResult = SecondSolve;
+            Dataset.TLResult = SecondSolve;
         } else {
-            TLResult = FirstSolve;
+            Dataset.TLResult = FirstSolve;
         }
-        return TLResult;
+        return Dataset.TLResult;
     }
 
-    public static Double SteelTL (double Frequency, double SteelWeight)	{
-        SteelTL = (20 * (Math.log10(SteelWeight * Frequency)) - 47.2);
-        return SteelTL;
+    public double SteelTL (double Frequency, double SteelWeight)	{
+        Dataset.SteelTL = (20 * (Math.log10(SteelWeight * Frequency)) - 47.2);
+        return Dataset.SteelTL;
     }
 
-    public static Double MaterialIL (double Trim, double Bare)	{
-        MaterialIL = Trim - Bare;
-        return MaterialIL;
+    public double MaterialIL (double Trim, double Bare)	{
+        Dataset.MaterialIL = Trim - Bare;
+        return Dataset.MaterialIL;
     }
 }
