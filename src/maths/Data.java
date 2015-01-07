@@ -16,6 +16,8 @@ public class Data {
     public List<Double> BMWavespeedArray = new ArrayList<Double>();
     public List<Boolean> BMGlassArray = new ArrayList<Boolean>();
 
+    public double Factorial, Bessel;
+
     public double[] Freq = {
             100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000
     };

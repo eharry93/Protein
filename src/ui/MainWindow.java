@@ -28,6 +28,9 @@ public class MainWindow extends JFrame {
     private JButton okayButton;
     private JButton loadButton;
     private JTextField textField4;
+    private JTextField textField5;
+    private JComboBox comboBox2;
+    private JComboBox comboBox3;
     public static String[] array = new String[]{"Model 1"};
 
     public static String newModelName;

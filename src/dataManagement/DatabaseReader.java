@@ -18,7 +18,6 @@ public class DatabaseReader extends EquationControl {
 
         while (scan.hasNext()) {
             Dataset.BMNameArray.add(scan.next());
-//            Dataset.BMThicknessArray.add(Double.valueOf(scan.next()));
             Dataset.BMDensityArray.add(Double.valueOf(scan.next()));
             Dataset.BMDLFArray.add(Double.valueOf(scan.next()));
             Dataset.BMWavespeedArray.add(Double.valueOf(scan.next()));
