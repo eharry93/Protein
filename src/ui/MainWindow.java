@@ -1,10 +1,9 @@
 package ui;
 
-import maths.EquationControl;
-import maths.TransmissionLoss;
-import dataManagement.Systems;
-import org.jfree.data.xy.XYSeries;
 import dataManagement.NewFile;
+import dataManagement.Systems;
+import maths.EquationControl;
+import org.jfree.data.xy.XYSeries;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,8 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static sun.reflect.annotation.AnnotationParser.toArray;
 
 /**
  * Created by Evan on 12/12/2014.
@@ -81,8 +78,6 @@ public class MainWindow extends JFrame {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-
-
             }
         });
 

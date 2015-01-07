@@ -1,6 +1,6 @@
 package maths;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,12 +46,12 @@ public class EquationControl {
         Dataset.Results.clear();
     }
 
-    public void MLTest() {
-        TransmissionLoss Solver = new TransmissionLoss();
-        List<Double> Result = new ArrayList<Double>();
-        for (int i = 0; i<Dataset.Freq.length; i++) {
-            Result.add(Solver.SteelTL(Dataset.Freq[i], (7.8 * 1.0)));
+    public double[] LowFreqRadCalc() {
+        LowFreqRadCalc Solver = new LowFreqRadCalc();
+        for (int i = 0; i < Dataset.FreqIndex.length; i++) {
+            Dataset.LowFreqRadFactor[i] = Solver.LowFreqCalc(Dataset.Freq[i]);
         }
-        System.out.println(Result);
+        System.out.println(Arrays.toString(Dataset.LowFreqRadFactor));
+        return Dataset.LowFreqRadFactor;
     }
 }
