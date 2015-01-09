@@ -9,8 +9,8 @@ import maths.*;
 public class Startup {
 
     public static void main(String[] args) {
-//        MainWindow.main(null);
-        Leakage tester = new Leakage();
-        tester.Factorial(10.0);
+        MainWindow.main(null);
+//        Leakage tester = new Leakage();
+//        tester.Factorial(10.0);
     }
 }

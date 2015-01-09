@@ -84,28 +84,38 @@ public class MainWindow extends JFrame {
             }
         });
 
-//        Button Action Listeners
-        solveButton.addActionListener(new ActionListener() {
+//        Model Menu
+        JMenu mnModel = new JMenu("Model");
+        menuBar.add(mnModel);
+//        Solve Model
+        JMenuItem mnitmSolve = new JMenuItem("Solve");
+        mnModel.add(mnitmSolve);
+        mnitmSolve.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Solve();
             }
         });
-
-        exportResultsButton.addActionListener(new ActionListener() {
+//        Export Results
+        JMenuItem mnitmExport = new JMenuItem("Export Results");
+        mnModel.add(mnitmExport);
+        mnitmExport.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ExportResults();
+
             }
         });
-
-        graphButton.addActionListener(new ActionListener() {
+//        Graph Results
+        JMenuItem mnitmGraph = new JMenuItem("Graph Results");
+        mnModel.add(mnitmGraph);
+        mnitmGraph.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Graph();
             }
         });
 
+//        Button Action Listeners
         okayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

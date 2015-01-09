@@ -18,7 +18,6 @@ public class Leakage extends EquationControl {
             }
         }
         Dataset.Factorial = Temp;
-        System.out.println(Dataset.Factorial);
 
         return Dataset.Factorial;
     }

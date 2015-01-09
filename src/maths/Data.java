@@ -8,13 +8,19 @@ import java.util.List;
  */
 public class Data {
 
-//    Database Arrays
+//    Database Arrays - Bare Metal
     public List<String> BMNameArray = new ArrayList<String>();
     public List<Double> BMThicknessArray = new ArrayList<Double>();
     public List<Double> BMDensityArray = new ArrayList<Double>();
     public List<Double> BMDLFArray = new ArrayList<Double>();
     public List<Double> BMWavespeedArray = new ArrayList<Double>();
     public List<Boolean> BMGlassArray = new ArrayList<Boolean>();
+//    Database Arrays - Decoupler
+    public List<String> DecouplerNameArray = new ArrayList<String>();
+    public List<Double> DecouplerDensityArray = new ArrayList<Double>();
+//    Database Arrays - Barrier
+    public List<String> BarrierNameArray = new ArrayList<String>();
+    public List<Double> BarrierDensityArray = new ArrayList<Double>();
 
     public double Factorial, Bessel;
 
