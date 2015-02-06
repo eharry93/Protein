@@ -1,8 +1,8 @@
 package dataManagement;
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
-
 import maths.EquationControl;
 
 /**
@@ -45,5 +45,11 @@ public class DatabaseReader extends EquationControl {
             Dataset.DecouplerNameArray.add(scan.next());
             Dataset.DecouplerDensityArray.add(Double.valueOf(scan.next()));
         }
+    }
+
+    public List<String> BMNameReader() {
+        List<String> BMNames
+
+        return
     }
 }
