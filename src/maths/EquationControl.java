@@ -3,6 +3,9 @@ package maths;
 import java.util.Arrays;
 import java.util.List;
 
+import dataManagement.Data;
+import dataManagement.DatabaseReader;
+
 /**
  * Created by Evan on 05/01/2015.
  */

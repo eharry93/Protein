@@ -1,4 +1,4 @@
-package maths;
+package dataManagement;
 
 import java.util.ArrayList;
 import java.util.List;

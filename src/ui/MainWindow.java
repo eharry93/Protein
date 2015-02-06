@@ -4,6 +4,7 @@ import dataManagement.NewFile;
 import dataManagement.Systems;
 import maths.EquationControl;
 import org.jfree.data.xy.XYSeries;
+import dataManagement.DatabaseReader;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -143,6 +144,7 @@ public class MainWindow extends JFrame {
 
     public void Solve() {
         EquationControl Solver = new EquationControl();
+//        DatabaseReader Solver = new DatabaseReader();
         Solver.TLSolver(Double.parseDouble(textField1.getText()), Double.parseDouble(textField2.getText()), Double.parseDouble(textField3.getText()), Double.parseDouble(textField4.getText()));
         Solver.CoincidenceFactor();
         Results = Solver.AddResults();
